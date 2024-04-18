@@ -1,20 +1,21 @@
 #include <iostream>
+#define MATRIXSIZE 12
 
 struct Coordinates {
     int x, y;
 };
 
-void initialization(bool arr[12][12]) {
-    for (int i = 0; i < 12; i++) {
-        for (int j = 0; j < 12; j++) {
+void initialization(bool arr[MATRIXSIZE][MATRIXSIZE]) {
+    for (int i = 0; i < MATRIXSIZE; i++) {
+        for (int j = 0; j < MATRIXSIZE; j++) {
             arr[i][j] = true;
         }
     }
 }
 
-bool isPopped(bool arr[12][12]) {
-    for (int i = 0; i < 12; i++) {
-        for (int j = 0; j < 12; j++) {
+bool isPopped(bool arr[MATRIXSIZE][MATRIXSIZE]) {
+    for (int i = 0; i < MATRIXSIZE; i++) {
+        for (int j = 0; j < MATRIXSIZE; j++) {
             if (arr[i][j]) {
                 return false;
             }
@@ -24,16 +25,16 @@ bool isPopped(bool arr[12][12]) {
 }
 
 bool checkInput(Coordinates begin, Coordinates end) {
-    if ((begin.x <= 0 || begin.x > 12)
-        || (begin.y <= 0 || begin.y > 12)
-        || (end.x <= 0 || end.x > 12)
-        || (end.y <= 0 || end.y > 12)) {
+    if ((begin.x <= 0 || begin.x > MATRIXSIZE)
+        || (begin.y <= 0 || begin.y > MATRIXSIZE)
+        || (end.x <= 0 || end.x > MATRIXSIZE)
+        || (end.y <= 0 || end.y > MATRIXSIZE)) {
         return false;
     }
     return true;
 }
 
-void popping(bool arr[12][12], Coordinates begin, Coordinates end) {
+void popping(bool arr[MATRIXSIZE][MATRIXSIZE], Coordinates begin, Coordinates end) {
     for (int i = begin.x - 1; i <= end.x - 1; i++) {
         for (int j = begin.y - 1; j <= end.y - 1; j++) {
             if (arr[i][j]) {
@@ -45,9 +46,9 @@ void popping(bool arr[12][12], Coordinates begin, Coordinates end) {
     std::cout << std::endl;
 }
 
-void printArray(bool arr[12][12]) {
-    for (int i = 0; i < 12; i++) {
-        for (int j = 0; j < 12; j++) {
+void printArray(bool arr[MATRIXSIZE][MATRIXSIZE]) {
+    for (int i = 0; i < MATRIXSIZE; i++) {
+        for (int j = 0; j < MATRIXSIZE; j++) {
             std::cout << arr[i][j] << " ";
         }
         std::cout << std::endl;
@@ -55,7 +56,7 @@ void printArray(bool arr[12][12]) {
 }
 
 int main() {
-    bool arr[12][12];
+    bool arr[MATRIXSIZE][MATRIXSIZE];
     initialization(arr);
     Coordinates begin, end;
 
@@ -64,10 +65,11 @@ int main() {
         std::cin >> begin.x >> begin.y;
         std::cin >> end.x >> end.y;
         std::cout << std::endl;
-        if (checkInput(begin, end)) {
-            popping(arr, begin, end);
-            printArray(arr);
+        if (!checkInput(begin, end)) {
+            return 0;
         }
+        popping(arr, begin, end);
+        printArray(arr);
     }
 
     return 0;
